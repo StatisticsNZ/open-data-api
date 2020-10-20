@@ -1,4 +1,8 @@
-## Look at the [Wiki](https://github.com/StatisticsNZ/open-data-api/wiki) to understand how to use the Open Data service
+---
+
+View the [Wiki](https://github.com/StatisticsNZ/open-data-api/wiki) to understand how to use the Open Data service
+
+---
 
 # Accessing Stats NZ Open data
 
