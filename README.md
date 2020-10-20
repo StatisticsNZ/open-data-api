@@ -40,7 +40,7 @@ You can manage your subscriptions by selecting ‘Profile’ from the menu.  Fro
 
 From the menu option ‘APIs’ you can view all the APIs that belong to your subscriptions.  You can also access this via your ‘Profile’.
 
-![image](./images/APIS.png "Profile")
+![image](./images/apis.png "Profile")
 
 ## Viewing your usage of the API’s
 
