@@ -75,16 +75,16 @@ Example use of filtering:
 ```python
 service = "https://api.stats.govt.nz/opendata/v1"
 endpoint = "EmploymentIndicators"
-entity = "Observations",
-query_option = "$filter=(
+entity = "Observations"
+query_option = """$filter=(
                         ResourceID eq 'MEI1.1' and
                         Period ge 2020-08-31 and
                         Label2 eq 'Actual' and
                         Duration eq 'P1M'
                           )
                 &$select=ResourceID,Period,Duration,Label1,Label2,Value,Unit,Measure,Multiplier
-                &$top=10",
-service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"))
+                &$top=10"""
+api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 Observations = odata.get_odata(service, endpoint, entity, query_option, api_key, proxies)
 
@@ -108,16 +108,16 @@ Example use of groupby: find all unique combination of values for Label1, Label2
 ```R
 service = "https://api.stats.govt.nz/opendata/v1"
 endpoint = "EmploymentIndicators"
-entity = "Observations",
-query_option = "$filter=(
+entity = "Observations"
+query_option = """$filter=(
                         ResourceID eq 'MEI1.1' and
                         Period ge 2020-08-31 and
                         Label2 eq 'Actual' and
                         Duration eq 'P1M'
                           )
                 &$apply=groupby((Label1,Label2,Measure))
-                &$top=10",
-service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"))
+                &$top=10"""
+service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 Observations = odata.get_odata(service, endpoint, entity, query_option, api_key, proxies)
 
