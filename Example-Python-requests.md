@@ -117,7 +117,7 @@ query_option = """$filter=(
                           )
                 &$apply=groupby((Label1,Label2,Measure))
                 &$top=10"""
-service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 Observations = odata.get_odata(service, endpoint, entity, query_option, api_key, proxies)
 
