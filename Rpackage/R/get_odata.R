@@ -1,5 +1,21 @@
-# function to call the stats nz open data api
-
+#' Call the Statistics NZ open data API
+#'
+#' @param endpoint A string scaler referencing the service endpoint to be queried.
+#' In this case a "service endpoint" can be thought of as a database. Endpoint names
+#' can be found in the _endpoint_ column of the dataframe, which is generated using
+#' the `get_odata_catalogue()` function.
+#' @param entity A string scaler referencing which entity in the data model to be used.
+#' There are two options: "Observations" or "Resources".
+#' Observations returns actual data observations relevant to your query.
+#' Resources returns metadata associated with your query.
+#' @param query_option A query string used to filter and aggregate results. Refer to
+#' [Github](https://github.com/StatisticsNZ/open-data-api/blob/main/Example-R-requests.md)
+#' for examples.
+#'
+#' @return A dataframe.
+#' @export
+#'
+#' @examples
 get_odata <- function(endpoint, entity, query_option) {
 
   # Function inner variables

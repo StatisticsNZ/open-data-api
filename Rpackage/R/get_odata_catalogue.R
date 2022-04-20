@@ -1,5 +1,13 @@
-# function to call the stats nz open data catalogue
-
+#' Information of available data on the Statistics NZ open data catalogue
+#'
+#' @param slim_df A boolean TRUE/FALSE argument. When set to __TRUE__ the resultant dataframe
+#' only contains columns: _title_, _description_ and _endpoint_ of the available endpoints.
+#' Otherwise, all information/metadata is returned. The default argument is set to __FALSE__
+#'
+#' @return A dataframe
+#' @export
+#'
+#' @examples
 get_odata_catalogue <- function(slim_df=FALSE) {
 
   # Look at the available tables
