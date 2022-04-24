@@ -16,14 +16,20 @@
 #' @export
 #'
 #' @examples
-get_odata <- function(endpoint, query_option, entity="Observations") {
+get_odata <- function(endpoint, entity="Observations", query_option="") {
 
   # Get & check api key
   api_key <- get_api_key()
 
+  # Limit to 1000 obs if "$top=<num>" is not defined
+  if(!stringr::str_detect(query_option, "top=\\d+") & !stringr::str_detect(deparse(sys.calls())[[1]], "get_odata_entities")){
+    message("No row limit set. Returning top 1000 observations.")
+    query_option <- paste0(query_option, "$top=1000")
+  }
+
   # Function inner variables
   odata_url <- utils::URLencode(paste0("https://api.stats.govt.nz/opendata/v1/", endpoint, "/", entity, "?", query_option))
-  top_query <- grepl("$top", query_option, fixed=TRUE)
+  num_obs <- grepl("$top", query_option, fixed=TRUE)
 
   # continue getting results while there are additional pages
   while (!is.null(odata_url)) {
@@ -35,7 +41,7 @@ get_odata <- function(endpoint, query_option, entity="Observations") {
     )
 
     # catch errors
-    if (httr::http_type(result) != "application/json") stop("API did not return json", call. = FALSE)
+    if (httr::http_type(result) != "application/json") stop("API did not return json. Try decreasing the number of observations requested.", call. = FALSE)
 
     if (httr::http_error(result)) {
       stop(
@@ -56,23 +62,11 @@ get_odata <- function(endpoint, query_option, entity="Observations") {
     cat("\r", nrow(response), "obs retrieved")
 
     # break when top(n) obs are specified
-    if (top_query) break
+    if (num_obs) break
   }
 
   structure(response, comment = "Odata response")
 }
 
 
-#' Title
-#'
-#' @return Query string to be used within get_odata() function.
-#'
-#' @examples
-query_option_string_formatter <- function(query_option){
 
-  # Check number of observations
-  # if missing, amend string to add $top100
-  # if over X, amend string to add $topX.
-  # Add warning messages when number of observations was altered.
-
-}

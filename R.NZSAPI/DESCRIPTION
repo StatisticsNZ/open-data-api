@@ -16,5 +16,6 @@ Imports:
     dplyr,
     httr,
     jsonlite,
+    purrr,
     stringr,
     tidyr

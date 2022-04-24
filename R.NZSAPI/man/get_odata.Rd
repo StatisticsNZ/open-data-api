@@ -4,7 +4,7 @@
 \alias{get_odata}
 \title{Call the Statistics NZ open data API}
 \usage{
-get_odata(endpoint, query_option, entity = "Observations")
+get_odata(endpoint, entity = "Observations", query_option = "")
 }
 \arguments{
 \item{endpoint}{A string scaler referencing the service endpoint to be queried.
@@ -12,14 +12,14 @@ In this case a "service endpoint" can be thought of as a database. Endpoint name
 can be found in the \emph{endpoint} column of the dataframe, which is generated using
 the \code{get_odata_catalogue()} function.}
 
-\item{query_option}{A query string used to filter and aggregate results. Refer to
-\href{https://github.com/StatisticsNZ/open-data-api/blob/main/Example-R-requests.md}{Github}
-for examples.}
-
 \item{entity}{A string scaler referencing which entity in the data model to be used.
 There are two options: "Observations" or "Resources".
 Observations returns actual data observations relevant to your query.
 Resources returns metadata associated with your query.}
+
+\item{query_option}{A query string used to filter and aggregate results. Refer to
+\href{https://github.com/StatisticsNZ/open-data-api/blob/main/Example-R-requests.md}{Github}
+for examples.}
 }
 \value{
 A dataframe.
