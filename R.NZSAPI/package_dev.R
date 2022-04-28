@@ -1,0 +1,16 @@
+library(tidyverse)
+library(devtools)
+library(testthat)
+# create_package(here::here("R.NZSAPI"))
+
+# map(c("get_odata_catalogue", "get_odata", "get_odata_entities"), use_r)
+# load_all()
+# use_mit_license()
+document()
+# use_testthat()
+# map(c("get_odata_catalogue", "get_odata", "get_check_api_key", "get_odata_entities"), use_test)
+# map(c("tidyr", "httr", "jsonlite", "stringr", "dplyr", "purrr"), use_package)
+check()
+# install()
+library(R.NZSAPI)
+
