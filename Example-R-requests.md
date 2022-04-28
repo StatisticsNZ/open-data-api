@@ -4,6 +4,12 @@ Install package
 library(R.NZSAPI)
 ```
 
+Set API key as system variable in ~/.Renviron file
+variable must be named "nz_stat_api_key"
+```R
+nz_stat_api_key=xxxxxxxxxxxxxxxxxxxxxxxx 
+```
+
 
 Find available datasets
 ```R
