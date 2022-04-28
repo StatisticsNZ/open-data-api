@@ -2,12 +2,16 @@
 #'
 #' @param slim_df A boolean TRUE/FALSE argument. When set to __TRUE__ the resultant dataframe
 #' only contains columns: _title_, _description_ and _endpoint_ of the available endpoints.
-#' Otherwise, all information/metadata is returned. The default argument is set to __FALSE__
+#' Otherwise, all information/metadata is returned. The default argument is set to __FALSE__.
+#'
+#' Use output in the _endpoint_ column within the _get_odata(endpoint=*df$endpoint*)_ function.
 #'
 #' @return A dataframe
 #' @export
 #'
 #' @examples
+#' (stat_catalogue <- get_odata_catalogue())
+#'
 get_odata_catalogue <- function(slim_df=FALSE) {
 
   # Get & check api key

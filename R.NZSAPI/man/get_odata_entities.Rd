@@ -12,3 +12,8 @@ A dataframe.
 \description{
 Get catalogues available for each endpoint
 }
+\examples{
+(stat_entities <- get_odata_entities())
+
+
+}

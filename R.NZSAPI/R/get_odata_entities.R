@@ -4,6 +4,9 @@
 #' @export
 #'
 #' @examples
+#' (stat_entities <- get_odata_entities())
+#'
+#'
 get_odata_entities <- function() {
 
   # Get & check api key

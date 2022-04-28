@@ -16,6 +16,12 @@
 #' @export
 #'
 #' @examples
+#' #> Obtain observations from the endpoint
+#' df <- get_odata(endpoint = stat_category$endpoint[1])
+#'
+#' #> Obtain meta-data on the endpoint
+#'df_md <- get_odata(endpoint = stat_category$endpoint[1], entity = stat_entities$entity[1])
+#'
 get_odata <- function(endpoint, entity="Observations", query_option="") {
 
   # Get & check api key

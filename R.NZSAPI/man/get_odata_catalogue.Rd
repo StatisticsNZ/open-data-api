@@ -9,11 +9,17 @@ get_odata_catalogue(slim_df = FALSE)
 \arguments{
 \item{slim_df}{A boolean TRUE/FALSE argument. When set to \strong{TRUE} the resultant dataframe
 only contains columns: \emph{title}, \emph{description} and \emph{endpoint} of the available endpoints.
-Otherwise, all information/metadata is returned. The default argument is set to \strong{FALSE}}
+Otherwise, all information/metadata is returned. The default argument is set to \strong{FALSE}.
+
+Use output in the \emph{endpoint} column within the \emph{get_odata(endpoint=\emph{df$endpoint})} function.}
 }
 \value{
 A dataframe
 }
 \description{
 Information of available data on the Statistics NZ open data catalogue
+}
+\examples{
+(stat_catalogue <- get_odata_catalogue())
+
 }

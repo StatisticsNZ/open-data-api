@@ -1,154 +1,55 @@
+Install package
+```R
+# devtools::install_github("StatisticsNZ/open-data-api/R.NZSAPI")
+library(R.NZSAPI)
+```
+
+
 Find available datasets
 ```R
-source("get-opendata-catalogue-fun.R")
-
-Catalogue <- get_odata_catalogue(
-                          service="https://api.stats.govt.nz/opendata/v1",
-                          endpoint="data.json",
-                          service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                          )
-
-print(Catalogue[,c("distribution")])
+(stat_cat <- get_odata_catalogue(slim_df=TRUE))
 ```
 
 ```text
- distribution$accessURL                                   $title         $description                                                        $format
-  <chr>                                                   <chr>          <chr>                                                               <chr>  
-1 https://api.stats.govt.nz/odata/v1/EmploymentIndicators Employment In… "This employment indicator series is intended to provide an early…  api    
-2 https://api.stats.govt.nz/odata/v1/OverseasCargo        Overseas Cargo…"Overseas cargo records all goods, value and gross weight, loaded…  api    
-3 https://api.stats.govt.nz/odata/v1/Covid-19Indicators   Covid19 Indica…"Stats NZ's COVID-19 data portal indicators gather key high-frequ…  api    
+  title                   description                     endpoint
+  <chr>                   <chr>                           <chr>  
+1 Employment Indicators   This employment indicator...    EmploymentIndicators
+2 Overseas Cargo          Overseas cargo records all...   OverseasCargo
+3 Covid19 Indicators      Stats NZ's COVID-19 data...     Covid-19Indicators
+4 International Migra...  International migration mea...  InternationalMigration
+5 Household Labour Fo...  Statistics New Zealand’s q...   HouseholdLabourForceSurvey
+6 2018 Census of Pop...   Example aggregates from the...  2018Census-PopulationDwellings
+7 Overseas Merchandis...  Overseas Merchandise Trade...   OverseasMerchandiseTrade
+8 International Travel    International travel covers...  InternationalTravel
+9 National Accounts       The conceptual framework use... NationalAccounts   
 
 ```
 
-Using the first accessURL from the cataloge, find the entities in the service data model
-
+Using an endpoint from stat_cat to obtain data observations
 ```R
-source("get-odata-fun.R")
-
-ServiceEntities <-  Filter(function(x)!all(is.na(x)),
-                     get_odata(
-                       service = "https://api.stats.govt.nz/opendata/v1",
-                       endpoint = "EmploymentIndicators",
-                       entity = "",
-                       query_option = "",
-                       service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"))
-
-print(ServiceEntities)
+stat_df <- get_odata(endpoint = stat_cat$endpoint[1])
 ```
-
-```text
-          name      kind          url
-1    Resources EntitySet    Resources
-2 Observations EntitySet Observations
-```                       
-
-Using the service entity list, get 10 rows for each entity
+An example using the _query_option_ argument
 ```R
-
-Observations <-  Filter(function(x)!all(is.na(x)),
-                        get_odata(
-                          service = "https://api.stats.govt.nz/opendata/v1",
-                          endpoint = "EmploymentIndicators",
-                          entity = "Observations",
-                          query_option = "$select=ResourceID,Period,Duration,Label1,Label2,Value,Unit,Measure,Multiplier&$top=10",
-                          service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"))
-print(Observations)
+stat_df <-  get_odata(
+  endpoint = stat_cat$endpoint[1]
+  , query_option = "
+    $filter=(Label2 eq 'Actual' and Duration eq 'P1M')
+    &$select=Label1,Label2,Unit,Measure,Value
+    &$apply=groupby((Label1,Label2,Unit,Measure)) 
+    &$top=10
+  "
+)
 ```
+_query_option_ sends a _SQL **like**_ argument to the API for finer control on data returned.
+               
 
-```text
-   ResourceID     Period Duration                     Label1              Label2        Value   Unit        Measure Multiplier
-1      MEI1.1 1999-04-30      P1M             All industries              Actual 1454212.0000 Number    Filled jobs          0
-2      MEI1.1 1999-04-30      P1M             All industries Seasonally adjusted 1450296.0000 Number    Filled jobs          0
-3      MEI1.1 1999-04-30      P1M             All industries Seasonally adjusted    3473.7750    NZD Total earnings          6
-4      MEI1.1 1999-04-30      P1M             All industries               Trend 1417940.0000 Number    Filled jobs          0
-5      MEI1.1 1999-04-30      P1M Goods-producing industries Seasonally adjusted  295021.0000 Number    Filled jobs          0
-6      MEI1.1 1999-04-30      P1M Goods-producing industries Seasonally adjusted     820.1100    NZD Total earnings          6
-7      MEI1.1 1999-04-30      P1M Goods-producing industries               Trend  288930.0000 Number    Filled jobs          0
-8      MEI1.1 1999-04-30      P1M Goods-producing industries               Trend     832.5339    NZD Total earnings          6
-9      MEI1.1 1999-04-30      P1M         Primary industries              Actual   80267.0000 Number    Filled jobs          0
-10     MEI1.1 1999-04-30      P1M         Primary industries              Actual     130.7833    NZD Total earnings          6
-```
-
+Get available meta-data (entity) options for each endpoint
 ```R
-Resources <-  Filter(function(x)!all(is.na(x)),
-                     get_odata(
-                       service = "https://api.stats.govt.nz/opendata/v1",
-                       endpoint = "EmploymentIndicators",
-                       entity = "Resources",
-                       query_option = "$select=ResourceID,Title,Var1,Var2,Modified,Frequency&$top=10",
-                       service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"))
-
-print(Resources)
+stat_ent <- get_odata_entities()
 ```
 
-```text
-  ResourceID                                         Title                     Var1      Var2             Modified Frequency
-1     MEI1.1 Employment Indicators by published industries MEI Published industries Treatment 2020-09-27T21:45:00Z   Monthly
-
-```
-
-Example use of filtering:
-
+Get meta-data on an endpoint
 ```R
-Observations <-  Filter(function(x)!all(is.na(x)),
-                        get_odata(
-                          service = "https://api.stats.govt.nz/opendata/v1",
-                          endpoint = "EmploymentIndicators",
-                          entity = "Observations",
-                          query_option = "$filter=(
-                                                    ResourceID eq 'MEI1.1' and
-                                                    Period ge 2020-08-31 and
-                                                    Label2 eq 'Actual' and
-                                                    Duration eq 'P1M'
-                                                  )
-                                          &$select=ResourceID,Period,Duration,Label1,Label2,Value,Unit,Measure,Multiplier
-                                          &$top=10",
-                          service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"))
-
-print(Observations)
-```
-
-```text
- ResourceID     Period Duration                     Label1 Label2        Value   Unit        Measure Multiplier
-1     MEI1.1 2020-08-31      P1M             All industries Actual   10934.7751    NZD Total earnings          6
-2     MEI1.1 2020-08-31      P1M Goods-producing industries Actual  421476.0000 Number    Filled jobs          0
-3     MEI1.1 2020-08-31      P1M Goods-producing industries Actual    2298.0504    NZD Total earnings          6
-4     MEI1.1 2020-08-31      P1M         Service industries Actual 1662420.0000 Number    Filled jobs          0
-5     MEI1.1 2020-08-31      P1M             All industries Actual 2185024.0000 Number    Filled jobs          0
-6     MEI1.1 2020-08-31      P1M         Primary industries Actual  101128.0000 Number    Filled jobs          0
-7     MEI1.1 2020-08-31      P1M         Primary industries Actual     442.6769    NZD Total earnings          6
-8     MEI1.1 2020-08-31      P1M         Service industries Actual    8194.0477    NZD Total earnings          6
-```
-
-Example use of groupby: find all unique combination of values for Label1, Label2 and Measure
-
-```R
-Observations <-  Filter(function(x)!all(is.na(x)),
-                        get_odata(
-                          service = "https://api.stats.govt.nz/opendata/v1",
-                          endpoint = "EmploymentIndicators",
-                          entity = "Observations",
-                          query_option = "$filter=(
-                                                    ResourceID eq 'MEI1.1' and
-                                                    Period ge 2020-08-31 and
-                                                    Duration eq 'P1M'
-                                                  )
-                                          &$apply=groupby((Label1,Label2,Measure))        
-                                          &$top=10",
-                          service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"))
-print(Observations)                          
-```
-
-```text
-                       Label1              Label2        Measure
-1              All industries              Actual    Filled jobs
-2              All industries              Actual Total earnings
-3              All industries Seasonally adjusted    Filled jobs
-4              All industries Seasonally adjusted Total earnings
-5              All industries               Trend    Filled jobs
-6              All industries               Trend Total earnings
-7  Goods-producing industries              Actual    Filled jobs
-8  Goods-producing industries              Actual Total earnings
-9  Goods-producing industries Seasonally adjusted    Filled jobs
-10 Goods-producing industries Seasonally adjusted Total earnings
+endpoint_metadata <- get_odata(endpoint = stat_cat$endpoint[1], entity = stat_ent$name[1])
 ```
