@@ -5,7 +5,7 @@ import stats_odata as odata
 
 # setup variables
 
-service = "https://api.stats.govt.nz/opendata/v1"
+service = "https://api.stats.govt.nz/odata/v1"
 
 endpoint = "< a service endppoint >"
 entity = "< an entity in the data model >"
@@ -24,7 +24,7 @@ df = odata.get_odata(service, endpoint, entity, query_option, api_key, proxies)
 #
 # Top 10 Observations
 #
-# service = 'https://api.stats.govt.nz/opendata/v1'
+# service = 'https://api.stats.govt.nz/odata/v1'
 # endpoint = 'EmploymentIndicators'
 # entity = 'Observations' 
 # query_option = "$top=10"
@@ -37,7 +37,7 @@ df = odata.get_odata(service, endpoint, entity, query_option, api_key, proxies)
 #
 # Top 10 Resources
 #
-# service = 'https://api.stats.govt.nz/opendata/v1'
+# service = 'https://api.stats.govt.nz/odata/v1'
 # endpoint = 'EmploymentIndicators'
 # entity = 'Resources' 
 # query_option = "$top=10"

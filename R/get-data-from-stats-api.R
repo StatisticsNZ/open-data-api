@@ -6,7 +6,7 @@ source("get-odata-fun.R")
 
 Results <-  Filter(function(x)!all(is.na(x)),
                         get_odata(
-                          service = "https://api.stats.govt.nz/opendata/v1",
+                          service = "https://api.stats.govt.nz/odata/v1",
                           endpoint = "< a service endpoint >",
                           entity = "< an entity in the data model >",
                           query_option = "< a query string >",
@@ -18,7 +18,7 @@ Results <-  Filter(function(x)!all(is.na(x)),
 
 # Observations <-  Filter(function(x)!all(is.na(x)),
 #                         get_odata(
-#                           service = "https://api.stats.govt.nz/opendata/v1",
+#                           service = "https://api.stats.govt.nz/odata/v1",
 #                           endpoint = "EmploymentIndicators",
 #                           entity = "Observations",
 #                           query_option = "$top=10",
@@ -27,7 +27,7 @@ Results <-  Filter(function(x)!all(is.na(x)),
  
 # Resources <-  Filter(function(x)!all(is.na(x)),
 #                      get_odata(
-#                        service = "https://api.stats.govt.nz/opendata/v1",
+#                        service = "https://api.stats.govt.nz/odata/v1",
 #                        endpoint = "EmploymentIndicators",
 #                        entity = "Resources",
 #                        query_option = "$top=10",

@@ -12,7 +12,7 @@ All classification descriptor labels are sourced from the
  
 Request an Aria API access key at aria.admins@stats.govt.nz
   and ask for: test user access to try via swagger using
-  (http://aria.stats.govt.nz/aria-api/public/login.jsp), or
+  (https://aria.stats.govt.nz/aria-api/login), or
   application access using an API key (as per example below)
 
 Note: Access provided is temporary and will eventually
@@ -20,7 +20,7 @@ Note: Access provided is temporary and will eventually
 
 Note: The full list of descriptor URL's for a given service
   can be found in the service entity 'Descriptors' e.g.
-  https://api.stats.govt.nz/opendata/v1/OverseasMerchandiseTrade/Descriptors
+  https://api.stats.govt.nz/odata/v1/OverseasMerchandiseTrade/Descriptors
 '''
 
 
@@ -52,7 +52,7 @@ Overseas Merchandise Trade service
 
 # Setup query url -
 # return the 'released' (i.e.current) versions of the classification
-query_url = "https://api.stats.govt.nz/opendata/v1/OverseasMerchandiseTrade/Descriptors?$filter=(Status eq 'Released')"
+query_url = "https://api.stats.govt.nz/odata/v1/OverseasMerchandiseTrade/Descriptors?$filter=(Status eq 'Released')"
 
 omt_descriptor_url = requests.get(
     query_url,
