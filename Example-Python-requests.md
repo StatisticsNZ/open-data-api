@@ -4,7 +4,7 @@ Find the entities in the service data model
 
 import stats_odata as odata
 
-service = "https://api.stats.govt.nz/opendata/v1"
+service = "https://api.stats.govt.nz/odata/v1"
 endpoint = "EmploymentIndicators"
 entity = ""
 query_option = ""
@@ -26,7 +26,7 @@ Using the service entity list, get 10 rows for each entity
 
 ```python
 
-service = "https://api.stats.govt.nz/opendata/v1"
+service = "https://api.stats.govt.nz/odata/v1"
 endpoint = "EmploymentIndicators"
 entity = "Observations" 
 query_option = "$select=ResourceID,Period,Duration,Label1,Label2,Value,Unit,Measure,Multiplier&$top=10"
@@ -52,7 +52,7 @@ print(Observations)
 ```
 
 ```python
-service = "https://api.stats.govt.nz/opendata/v1"
+service = "https://api.stats.govt.nz/odata/v1"
 endpoint = "EmploymentIndicators"
 entity = "Resources"
 query_option = "$select=ResourceID,Title,Var1,Var2,Modified,Frequency&$top=10"
@@ -73,7 +73,7 @@ print(Resources)
 Example use of filtering:
 
 ```python
-service = "https://api.stats.govt.nz/opendata/v1"
+service = "https://api.stats.govt.nz/odata/v1"
 endpoint = "EmploymentIndicators"
 entity = "Observations"
 query_option = """$filter=(
@@ -106,7 +106,7 @@ print(Observations)
 Example use of groupby: find all unique combination of values for Label1, Label2 and Measure
 
 ```R
-service = "https://api.stats.govt.nz/opendata/v1"
+service = "https://api.stats.govt.nz/odata/v1"
 endpoint = "EmploymentIndicators"
 entity = "Observations"
 query_option = """$filter=(

@@ -3,7 +3,7 @@ Find available datasets
 source("get-opendata-catalogue-fun.R")
 
 Catalogue <- get_odata_catalogue(
-                          service="https://api.stats.govt.nz/opendata/v1",
+                          service="https://api.stats.govt.nz/odata/v1",
                           endpoint="data.json",
                           service_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                           )
@@ -27,7 +27,7 @@ source("get-odata-fun.R")
 
 ServiceEntities <-  Filter(function(x)!all(is.na(x)),
                      get_odata(
-                       service = "https://api.stats.govt.nz/opendata/v1",
+                       service = "https://api.stats.govt.nz/odata/v1",
                        endpoint = "EmploymentIndicators",
                        entity = "",
                        query_option = "",
@@ -47,7 +47,7 @@ Using the service entity list, get 10 rows for each entity
 
 Observations <-  Filter(function(x)!all(is.na(x)),
                         get_odata(
-                          service = "https://api.stats.govt.nz/opendata/v1",
+                          service = "https://api.stats.govt.nz/odata/v1",
                           endpoint = "EmploymentIndicators",
                           entity = "Observations",
                           query_option = "$select=ResourceID,Period,Duration,Label1,Label2,Value,Unit,Measure,Multiplier&$top=10",
@@ -72,7 +72,7 @@ print(Observations)
 ```R
 Resources <-  Filter(function(x)!all(is.na(x)),
                      get_odata(
-                       service = "https://api.stats.govt.nz/opendata/v1",
+                       service = "https://api.stats.govt.nz/odata/v1",
                        endpoint = "EmploymentIndicators",
                        entity = "Resources",
                        query_option = "$select=ResourceID,Title,Var1,Var2,Modified,Frequency&$top=10",
@@ -92,7 +92,7 @@ Example use of filtering:
 ```R
 Observations <-  Filter(function(x)!all(is.na(x)),
                         get_odata(
-                          service = "https://api.stats.govt.nz/opendata/v1",
+                          service = "https://api.stats.govt.nz/odata/v1",
                           endpoint = "EmploymentIndicators",
                           entity = "Observations",
                           query_option = "$filter=(
@@ -125,7 +125,7 @@ Example use of groupby: find all unique combination of values for Label1, Label2
 ```R
 Observations <-  Filter(function(x)!all(is.na(x)),
                         get_odata(
-                          service = "https://api.stats.govt.nz/opendata/v1",
+                          service = "https://api.stats.govt.nz/odata/v1",
                           endpoint = "EmploymentIndicators",
                           entity = "Observations",
                           query_option = "$filter=(
