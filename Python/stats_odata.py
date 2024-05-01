@@ -7,7 +7,7 @@ import pandas as pd
 def get_odata(service, endpoint, entity, query_option, api_key, proxies):
     
 # setup variables    
-    headers = {'Ocp-Apim-Subscription-Key': api_key}
+    headers = {'Ocp-Apim-Subscription-Key': api_key, 'user-agent':''}
     proxies = proxies
     url = service + '/' + endpoint + '/' + entity + '?' + query_option
     top_query = "$top" in query_option
